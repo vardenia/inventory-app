@@ -8,7 +8,7 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application source
-COPY app.py seed.py ./
+COPY app.py db.py models.py seed.py ./
 
 # Expose Flask port
 EXPOSE 5000
