@@ -1,0 +1,33 @@
+version: "3.9"
+
+services:
+
+  mongo:
+    image: mongo:7.0
+    container_name: inventory_mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"          # expose for optional local Compass / mongosh access
+    volumes:
+      - mongo_data:/data/db    # persist data between restarts
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.runCommand({ping:1})"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  api:
+    build: .
+    container_name: inventory_api
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      MONGO_URI: mongodb://mongo:27017/
+    depends_on:
+      mongo:
+        condition: service_healthy
+
+volumes:
+  mongo_data:
