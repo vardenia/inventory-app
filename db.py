@@ -36,7 +36,7 @@ class DatabaseOperationError(Exception):
 
 def serialize(doc):
     """
-    Converts a MongoDB document into a JSON-serialisable dictionary.
+    Converts a MongoDB document into a JSON-serializable dictionary.
 
     MongoDB stores a special ObjectId type for the _id field, which cannot be
     directly converted to JSON. This function converts it to a plain string and
@@ -151,7 +151,7 @@ class ProductRepository:
 
         MongoDB automatically generates an _id field on insertion and adds it
         to the dict in place. We convert it to a plain string 'id' field here
-        so the returned dict is immediately JSON-serialisable.
+        so the returned dict is immediately JSON-serializable.
         """
         try:
             result = self.collection.insert_one(product_dict)
