@@ -6,6 +6,7 @@ Run once after the containers are up:  docker compose exec api python seed.py
 from pymongo import MongoClient
 from datetime import datetime
 import os
+import sys
 
 MONGO_URI = os.getenv("MONGO_URI", "mongodb://mongo:27017/")
 client = MongoClient(MONGO_URI)
@@ -98,7 +99,17 @@ for p in SAMPLE_PRODUCTS:
     p["created_at"] = now
     p["updated_at"] = now
 
-col.delete_many({})  # wipe existing data
-result = col.insert_many(SAMPLE_PRODUCTS)
-print(f"✅  Inserted {len(result.inserted_ids)} products into inventory.products.")
-client.close()
+# Wrap the database calls in a try/except so that a connection failure produces
+# a readable error message rather than a raw PyMongo traceback.
+# The finally block ensures the connection is always closed, whether the
+# insert succeeded or failed — without it, a failure would leave the
+# connection open.
+try:
+    col.delete_many({})  # wipe existing data before re-seeding
+    result = col.insert_many(SAMPLE_PRODUCTS)
+    print(f"✅  Inserted {len(result.inserted_ids)} products into inventory.products.")
+except Exception as e:
+    print(f"❌  Seeding failed: {e}", file=sys.stderr)
+    sys.exit(1)
+finally:
+    client.close()

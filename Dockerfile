@@ -7,11 +7,12 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy application source
-COPY app.py db.py models.py seed.py ./
+# Copy all application source files
+COPY app.py db.py models.py seed.py cli.py ./
 
 # Expose Flask port
 EXPOSE 5000
 
-# Production-style launch via gunicorn (falls back to Flask dev server if absent)
+# Start the Flask development server.
+# For production, replace with: CMD ["gunicorn", "-w", "4", "-b", "0:5000", "app:app"]
 CMD ["python", "app.py"]
