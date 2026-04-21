@@ -100,7 +100,7 @@ def cmd_list(args):
     query = {}
 
     if args.category:
-        # Case-insensitive regex match, consistent with the API behaviour.
+        # Case-insensitive regex match, consistent with the API behavior.
         # re.escape() prevents special characters in the input from being
         # treated as regex syntax.
         query["product_category"] = {"$regex": re.escape(args.category), "$options": "i"}
@@ -258,7 +258,7 @@ def cmd_delete(args):
     if not args.yes:
         confirm = input(f"Delete '{doc['product_name']}'? This cannot be undone. [y/N] ")
         if confirm.strip().lower() != "y":
-            print("Cancelled.")
+            print("Canceled.")
             return
 
     try:
@@ -401,7 +401,7 @@ if __name__ == "__main__":
         args.func(args)
     except KeyboardInterrupt:
         # Catches Ctrl+C cleanly at any point during execution — including during
-        # the delete confirmation prompt — so the user sees a simple "Cancelled."
+        # the delete confirmation prompt — so the user sees a simple "Canceled."
         # message instead of a Python traceback.
-        print("\nCancelled.")
+        print("\nCanceled.")
         sys.exit(0)
