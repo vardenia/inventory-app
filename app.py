@@ -124,7 +124,7 @@ def list_products():
         abort(503, description=str(e))
 
     # serialize() converts each document's ObjectId to a plain string before
-    # jsonify() attempts to serialise the list.
+    # jsonify() attempts to serialize the list.
     return jsonify([serialize(d) for d in docs]), 200
 
 
