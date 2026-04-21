@@ -9,10 +9,10 @@ A RESTful inventory management API built with Python Flask and MongoDB. The syst
 - [Overview](#overview)
 - [Tech Stack](#tech-stack)
 - [Project Structure](#project-structure)
+- [Objectives](#objectives)
 - [Getting Started](#getting-started)
 - [API Endpoint Documentation](#api-endpoint-documentation)
 - [CLI Documentation](#cli-documentation)
-- [Assignment Objectives](#assignment-objectives)
 
 ---
 
@@ -53,6 +53,62 @@ inventory-app/
   Dockerfile          ← API container image
   docker-compose.yml  ← Orchestrates API + MongoDB containers
 ```
+
+---
+
+---
+
+## Objectives
+
+### Inventory management system with integrated analytics and full-text search
+
+The system manages products across five categories (Electronics, Clothing, Home & Kitchen, Sports & Outdoors, Books) with full CRUD support via both the REST API and the CLI.
+
+**Analytics** are provided by `GET /products/analytics`, which runs four MongoDB aggregation pipelines to calculate totals, averages, per-category breakdowns, and low-stock alerts — all computed inside MongoDB rather than in application code for efficiency.
+
+**Full-text search** is powered by a MongoDB TEXT index created at startup on `product_name`, `product_category`, and `description`. It is accessible via the `?search=` query parameter:
+
+```bash
+curl "http://localhost:5000/products?search=wireless headphones"
+```
+
+---
+
+### Ability to add, delete, and update products
+
+All three operations are supported via the REST API and the CLI:
+
+| Operation | API | CLI |
+|-----------|-----|-----|
+| Add | `POST /products` | `python cli.py create --name ... --price ...` |
+| Update | `PUT /products/{id}` | `python cli.py update <id> --price ...` |
+| Delete | `DELETE /products/{id}` | `python cli.py delete <id>` |
+
+Updates are partial — only the fields provided are changed. All other fields remain untouched.
+
+---
+
+### Aggregated product metrics
+
+`GET /products/analytics` returns:
+
+- **Total product count** across the entire inventory
+- **Average price** across all products
+- **Total inventory value** — sum of `price × quantity` for all products
+- **Most popular category** — the category with the highest product count
+- **Category breakdown** — product count per category, sorted by popularity
+- **Price statistics per category** — average, minimum, and maximum price per category
+- **Low stock alert** — products with 10 or fewer units remaining, sorted by urgency
+
+---
+
+### MongoDB + Python Flask
+
+The application uses **MongoDB 7** as its database and **Python Flask** as its REST API framework, connected via the **PyMongo** driver. Both services run in Docker containers orchestrated by Docker Compose.
+
+MongoDB's document model stores each product as a flexible JSON-like document. Its aggregation pipeline is used for all analytics calculations, and its TEXT index powers full-text search — both without any additional infrastructure.
+
+Flask handles HTTP routing, request parsing, and response formatting. All database logic is kept out of Flask route functions and lives instead in the `ProductRepository` class in `db.py`, following the Repository pattern.
 
 ---
 
@@ -405,56 +461,4 @@ Sample output:
   Smart Coffee Maker             7 remaining
 ```
 
----
 
-## Assignment Objectives
-
-### Inventory management system with integrated analytics and full-text search
-
-The system manages products across five categories (Electronics, Clothing, Home & Kitchen, Sports & Outdoors, Books) with full CRUD support via both the REST API and the CLI.
-
-**Analytics** are provided by `GET /products/analytics`, which runs four MongoDB aggregation pipelines to calculate totals, averages, per-category breakdowns, and low-stock alerts — all computed inside MongoDB rather than in application code for efficiency.
-
-**Full-text search** is powered by a MongoDB TEXT index created at startup on `product_name`, `product_category`, and `description`. It is accessible via the `?search=` query parameter:
-
-```bash
-curl "http://localhost:5000/products?search=wireless headphones"
-```
-
----
-
-### Ability to add, delete, and update products
-
-All three operations are supported via the REST API and the CLI:
-
-| Operation | API | CLI |
-|-----------|-----|-----|
-| Add | `POST /products` | `python cli.py create --name ... --price ...` |
-| Update | `PUT /products/{id}` | `python cli.py update <id> --price ...` |
-| Delete | `DELETE /products/{id}` | `python cli.py delete <id>` |
-
-Updates are partial — only the fields provided are changed. All other fields remain untouched.
-
----
-
-### Aggregated product metrics
-
-`GET /products/analytics` returns:
-
-- **Total product count** across the entire inventory
-- **Average price** across all products
-- **Total inventory value** — sum of `price × quantity` for all products
-- **Most popular category** — the category with the highest product count
-- **Category breakdown** — product count per category, sorted by popularity
-- **Price statistics per category** — average, minimum, and maximum price per category
-- **Low stock alert** — products with 10 or fewer units remaining, sorted by urgency
-
----
-
-### MongoDB + Python Flask
-
-The application uses **MongoDB 7** as its database and **Python Flask** as its REST API framework, connected via the **PyMongo** driver. Both services run in Docker containers orchestrated by Docker Compose.
-
-MongoDB's document model stores each product as a flexible JSON-like document. Its aggregation pipeline is used for all analytics calculations, and its TEXT index powers full-text search — both without any additional infrastructure.
-
-Flask handles HTTP routing, request parsing, and response formatting. All database logic is kept out of Flask route functions and lives instead in the `ProductRepository` class in `db.py`, following the Repository pattern.
