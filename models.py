@@ -178,7 +178,7 @@ class ProductValidator:
 
         Unlike validate_create, no fields are strictly required — the client
         only needs to send the fields they want to change. However, at least
-        one recognised field must be present, and numeric fields must be valid
+        one recognized field must be present, and numeric fields must be valid
         if included.
 
         This method checks that values are valid but intentionally does not
@@ -193,7 +193,7 @@ class ProductValidator:
         allowed_updates = {k: v for k, v in data.items()
                            if k in ProductValidator.ALLOWED_UPDATE_FIELDS}
 
-        # Reject the request if none of the recognised fields were sent.
+        # Reject the request if none of the recognized fields were sent.
         if not allowed_updates:
             raise MissingFieldError(
                 f"Request must include at least one updatable field: "
