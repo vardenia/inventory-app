@@ -56,8 +56,6 @@ inventory-app/
 
 ---
 
----
-
 ## Objectives
 
 ### Inventory management system with integrated analytics and full-text search
