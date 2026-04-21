@@ -60,10 +60,10 @@ inventory-app/
 
 ### Prerequisites
 
-- Docker Desktop installed and running
+- [Docker Desktop](https://docs.docker.com/get-started/get-docker/) installed and running
 - Ports `5000` (API) and `27017` (MongoDB) free on your machine
 - A Mac/Linux terminal or Git Bash on Windows for curl examples. Alternatively, use [Postman](https://www.postman.com)
-- A Postman collection is included in the repository. Import Inventory API.postman_collection.json into Postman to test all endpoints
+- A Postman collection is included in the repository. Import "Inventory API.postman_collection.json" into Postman to test all endpoints
 
 ### Start the application
 
