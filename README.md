@@ -35,7 +35,7 @@ This separation means database logic, validation logic, and HTTP logic are each 
 | API framework | Python Flask |
 | Database | MongoDB 7 |
 | Database driver | PyMongo |
-| Containerisation | Docker + Docker Compose |
+| Containerization | Docker + Docker Compose |
 | Language | Python 3.12 |
 
 ---
@@ -128,7 +128,7 @@ cd inventory-app
 # 2. Build and start both containers
 docker compose up --build -d
 
-# 3. Wait ~15 seconds for MongoDB to initialise, then seed sample data
+# 3. Wait ~15 seconds for MongoDB to initialize, then seed sample data
 docker compose exec api python seed.py
 
 # 4. Confirm everything is running
