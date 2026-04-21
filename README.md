@@ -234,7 +234,7 @@ curl http://localhost:5000/products/64abc123def456789012
 ```json
 {
   "id": "64abc123def456789012",
-  "product_name": "Wireless Noise-Cancelling Headphones",
+  "product_name": "Wireless Noise-Canceling Headphones",
   "product_category": "Electronics",
   "price": 249.99,
   "available_quantity": 120,
