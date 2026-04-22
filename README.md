@@ -87,7 +87,7 @@ Expected response:
 {
   "status": "ok",
   "version": "1.3.0",
-  "checked_at": "2024-11-01T12:00:00Z",
+  "checked_at": "2026-01-01T12:00:00Z",
   "services": {
     "database": { "status": "ok" }
   }
@@ -135,7 +135,7 @@ curl http://localhost:5000/health
 {
   "status": "ok",
   "version": "1.3.0",
-  "checked_at": "2024-11-01T12:00:00Z",
+  "checked_at": "2026-01-01T12:00:00Z",
   "services": {
     "database": { "status": "ok" }
   }
@@ -187,8 +187,8 @@ curl http://localhost:5000/products/64abc123def456789012
   "available_quantity": 120,
   "description": "Over-ear headphones with 30-hour battery life and ANC.",
   "sku": "EL-HP-002",
-  "created_at": "2024-11-01T12:00:00Z",
-  "updated_at": "2024-11-01T12:00:00Z"
+  "created_at": "2026-01-01T12:00:00Z",
+  "updated_at": "2026-01-01T12:00:00Z"
 }
 ```
 
@@ -256,7 +256,7 @@ curl http://localhost:5000/products/analytics
 
 ```json
 {
-  "generated_at": "2024-11-01T12:00:00Z",
+  "generated_at": "2026-01-01T12:00:00Z",
   "summary": {
     "total_products": 23,
     "average_price": 142.36,
