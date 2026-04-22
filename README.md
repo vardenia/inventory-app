@@ -33,7 +33,7 @@ This separation means database logic, validation logic, and HTTP logic are each 
 | Layer | Technology |
 |-------|------------|
 | API framework | Python Flask |
-| Database | MongoDB 7 |
+| Database | MongoDB 8 |
 | Database driver | PyMongo |
 | Containerization | Docker + Docker Compose |
 | Language | Python 3.12 |
@@ -454,7 +454,7 @@ Updates are partial — only the fields provided are changed. All other fields r
 
 ### MongoDB + Python Flask
 
-The application uses **MongoDB 7** as its database and **Python Flask** as its REST API framework, connected via the **PyMongo** driver. Both services run in Docker containers orchestrated by Docker Compose.
+The application uses **MongoDB 8** as its database and **Python Flask** as its REST API framework, connected via the **PyMongo** driver. Both services run in Docker containers orchestrated by Docker Compose.
 
 MongoDB's document model stores each product as a flexible JSON-like document. Its aggregation pipeline is used for all analytics calculations, and its TEXT index powers full-text search — both without any additional infrastructure.
 
